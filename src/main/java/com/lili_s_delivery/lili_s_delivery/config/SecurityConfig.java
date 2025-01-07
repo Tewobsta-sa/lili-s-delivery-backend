@@ -30,10 +30,9 @@ public class SecurityConfig {
         httpSecurity
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/signup", "/auth/login").permitAll() // Allow signup and login without authentication
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll() // Allow all requests without authentication
                 )
-                .httpBasic(Customizer.withDefaults());  // Use the new method for basic auth
+                .httpBasic(Customizer.withDefaults());  // Optional: Use basic auth if needed
 
         return httpSecurity.build();
     }
