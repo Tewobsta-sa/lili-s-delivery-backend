@@ -2,6 +2,8 @@ package com.lili_s_delivery.lili_s_delivery.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -42,4 +44,5 @@ public class User {
 
     public String getPhone() { return phoneNumber; }
     public void setPhone(String phoneNumber) { this.phoneNumber = phoneNumber; }
+
 }
