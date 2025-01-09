@@ -1,12 +1,17 @@
 package com.lili_s_delivery.lili_s_delivery.controller;
 
+import com.lili_s_delivery.lili_s_delivery.dto.LoginRequest;
 import com.lili_s_delivery.lili_s_delivery.entity.User;
 import com.lili_s_delivery.lili_s_delivery.services.AuthService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+import java.util.Optional;
+
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 public class AuthController {
     private final AuthService authService;
 
@@ -21,9 +26,11 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody User user) {
-        return authService.authenticate(user.getUsername(), user.getPassword())
-                .map(authenticatedUser -> ResponseEntity.ok("Login successful!"))
-                .orElse(ResponseEntity.status(401).body("Invalid credentials"));
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+        Optional<Map<String, Object>> response = authService.authenticate(loginRequest.getUsername(), loginRequest.getPassword());
+        if (response.isPresent()) {
+            return ResponseEntity.ok(response.get());
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
     }
 }

@@ -35,6 +35,7 @@ public class AuthService {
             Map<String, Object> response = new HashMap<>();
             response.put("message", "Login successful!");
             response.put("token", tokenService.generateToken(user.get())); // Correct usage
+            response.put("userId", user.get().getId());
             response.put("user", Map.of(
                     "username", user.get().getUsername(),
                     "role", user.get().getRole()
